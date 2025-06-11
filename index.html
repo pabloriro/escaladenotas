@@ -26,7 +26,7 @@
         <div class="bg-white/70 backdrop-blur-sm p-6 rounded-2xl shadow-lg mb-8 border border-white/50">
             <div class="space-y-4">
                 <!-- Fila superior de inputs -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
                     <!-- Puntaje Máximo -->
                     <div>
                         <label for="puntajeMaximo" class="block text-sm font-medium text-gray-700 mb-1">Puntaje Máximo</label>
@@ -42,14 +42,9 @@
                         <label for="incremento" class="block text-sm font-medium text-gray-700 mb-1">Incr. Puntaje</label>
                         <input type="number" id="incremento" step="0.1" value="1" class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500">
                     </div>
-                     <!-- Nota de Aprobación -->
-                    <div>
-                        <label for="notaAprobacion" class="block text-sm font-medium text-gray-700 mb-1">Nota Aprob.</label>
-                        <input type="number" id="notaAprobacion" step="0.1" value="4.0" class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500">
-                    </div>
                 </div>
                  <!-- Fila inferior de inputs -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-end pt-2 lg:w-1/2 lg:mx-auto">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end pt-2">
                     <!-- Nota Mínima -->
                     <div>
                         <label for="notaMinima" class="block text-sm font-medium text-gray-700 mb-1">Nota Mínima</label>
@@ -59,6 +54,11 @@
                     <div>
                         <label for="notaMaxima" class="block text-sm font-medium text-gray-700 mb-1">Nota Máxima</label>
                         <input type="number" id="notaMaxima" step="0.1" value="7.0" class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                    </div>
+                     <!-- Nota de Aprobación -->
+                    <div>
+                        <label for="notaAprobacion" class="block text-sm font-medium text-gray-700 mb-1">Nota Aprob.</label>
+                        <input type="number" id="notaAprobacion" step="0.1" value="4.0" class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500">
                     </div>
                 </div>
             </div>
