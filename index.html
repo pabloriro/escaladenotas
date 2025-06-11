@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Escala de Notas</title>
+    <!-- Incluyendo Tailwind CSS para un diseño moderno y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-cyan-100 to-blue-200 text-gray-800 min-h-screen">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-6xl">
+
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-800">Calculadora de Escala de Notas</h1>
+            <p class="text-md text-slate-600 mt-2">Ingresa los parámetros para generar la escala de notas.</p>
+        </header>
+
+        <!-- Panel de configuración -->
+        <div class="bg-white/70 backdrop-blur-sm p-6 rounded-2xl shadow-lg mb-8 border border-white/50">
+            <div class="space-y-4">
+                <!-- Fila superior de inputs -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                    <!-- Puntaje Máximo -->
+                    <div>
+                        <label for="puntajeMaximo" class="block text-sm font-medium text-gray-700 mb-1">Puntaje Máximo</label>
+                        <input type="number" id="puntajeMaximo" value="30" class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                    </div>
+                    <!-- % de Exigencia/Aprobación -->
+                    <div>
+                        <label for="porcentajeExigencia" class="block text-sm font-medium text-gray-700 mb-1">% Aprobación</label>
+                        <input type="number" id="porcentajeExigencia" value="60" class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                    </div>
+                    <!-- Incremento de Puntaje -->
+                    <div>
+                        <label for="incremento" class="block text-sm font-medium text-gray-700 mb-1">Incr. Puntaje</label>
+                        <input type="number" id="incremento" step="0.1" value="1" class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                    </div>
+                     <!-- Nota de Aprobación -->
+                    <div>
+                        <label for="notaAprobacion" class="block text-sm font-medium text-gray-700 mb-1">Nota Aprob.</label>
+                        <input type="number" id="notaAprobacion" step="0.1" value="4.0" class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                    </div>
+                </div>
+                 <!-- Fila inferior de inputs -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-end pt-2 lg:w-1/2 lg:mx-auto">
+                    <!-- Nota Mínima -->
+                    <div>
+                        <label for="notaMinima" class="block text-sm font-medium text-gray-700 mb-1">Nota Mínima</label>
+                        <input type="number" id="notaMinima" step="0.1" value="1.0" class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                    </div>
+                    <!-- Nota Máxima -->
+                    <div>
+                        <label for="notaMaxima" class="block text-sm font-medium text-gray-700 mb-1">Nota Máxima</label>
+                        <input type="number" id="notaMaxima" step="0.1" value="7.0" class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                    </div>
+                </div>
+            </div>
+             <!-- Botón para generar la escala -->
+            <div class="mt-6">
+                 <button id="generarBtn" class="w-full bg-cyan-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition duration-200 ease-in-out text-lg shadow-md hover:shadow-lg">
+                    Generar
+                </button>
+            </div>
+             <!-- Mensaje de error -->
+            <div id="error-message" class="text-red-600 mt-4 text-center font-medium hidden"></div>
+        </div>
+
+        <!-- Tabla de Resultados -->
+        <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden border border-white/50">
+             <div class="p-4 sm:p-6 border-b border-gray-200/80">
+                <h2 class="text-xl font-semibold text-slate-700">Resultados</h2>
+            </div>
+            <!-- Contenedor de la tabla -->
+            <div>
+                <table class="min-w-full">
+                    <thead class="bg-cyan-50/50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cyan-800 uppercase tracking-wider">
+                                Puntaje
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cyan-800 uppercase tracking-wider">
+                                Nota
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaResultados" class="divide-y divide-gray-200/80">
+                         <tr><td colspan="2" class="px-6 py-12 text-center text-gray-500">Presiona "Generar" para ver la escala de notas.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer con el nombre -->
+    <footer class="text-center p-4 mt-8 text-sm text-slate-600">
+        <p>Escala creada por Pablo Riquelme</p>
+    </footer>
+
+    <script>
+        const generarBtn = document.getElementById('generarBtn');
+        const tablaResultados = document.getElementById('tablaResultados');
+        const errorMessage = document.getElementById('error-message');
+
+        generarBtn.addEventListener('click', () => {
+            // Obtener y convertir valores de los inputs
+            const puntajeMaximo = parseFloat(document.getElementById('puntajeMaximo').value);
+            const porcentajeExigencia = parseInt(document.getElementById('porcentajeExigencia').value);
+            const notaMinima = parseFloat(document.getElementById('notaMinima').value);
+            const notaMaxima = parseFloat(document.getElementById('notaMaxima').value);
+            const notaAprobacion = parseFloat(document.getElementById('notaAprobacion').value);
+            const incremento = parseFloat(document.getElementById('incremento').value);
+
+            // Validación de entradas
+            if (isNaN(puntajeMaximo) || isNaN(porcentajeExigencia) || isNaN(notaMinima) || isNaN(notaMaxima) || isNaN(notaAprobacion) || isNaN(incremento) ||
+                puntajeMaximo <= 0 || porcentajeExigencia <= 0 || porcentajeExigencia > 100 || incremento <= 0 ||
+                notaMinima >= notaMaxima || notaAprobacion <= notaMinima || notaAprobacion > notaMaxima) {
+                errorMessage.textContent = 'Por favor, ingresa valores válidos. Revisa que la nota de aprobación esté entre la mínima y la máxima, y que el incremento sea positivo.';
+                errorMessage.classList.remove('hidden');
+                tablaResultados.innerHTML = '<tr><td colspan="2" class="px-6 py-12 text-center text-red-600">Error en los datos de entrada.</td></tr>';
+                return;
+            }
+            errorMessage.classList.add('hidden');
+
+            // Limpiar resultados anteriores
+            tablaResultados.innerHTML = '';
+
+            // Calcular el puntaje necesario para aprobar
+            const puntajeAprobacion = Math.round(puntajeMaximo * (porcentajeExigencia / 100));
+            
+            // Tramos de cálculo
+            const tramoReprobacion = notaAprobacion - notaMinima;
+            const tramoAprobacion = notaMaxima - notaAprobacion;
+            
+            // Determinar decimales para formatear el puntaje, basado en el input de incremento
+            const puntajeDecimales = String(incremento).includes('.') ? String(incremento).split('.')[1].length : 0;
+            
+            let approvalRowHighlighted = false;
+
+            // Generar cada fila de la tabla, usando el incremento para el puntaje
+            for (let puntaje = 0; puntaje <= puntajeMaximo; puntaje += incremento) {
+                let notaFinal;
+
+                if (puntaje < puntajeAprobacion) {
+                    // Fórmula para notas bajo el punto de corte (escala lineal)
+                    // Se previene la división por cero si el puntaje de aprobación es 0
+                    notaFinal = notaMinima + (tramoReprobacion * (puntaje / (puntajeAprobacion > 0 ? puntajeAprobacion : 1) ));
+                } else {
+                    // Fórmula para notas sobre el punto de corte (escala lineal)
+                    const puntajeRelativo = puntaje - puntajeAprobacion;
+                    const rangoPuntajeAprobacion = puntajeMaximo - puntajeAprobacion;
+                    // Evitar división por cero si el puntaje de aprobación es el máximo
+                    if (rangoPuntajeAprobacion <= 0) {
+                        notaFinal = notaMaxima;
+                    } else {
+                        notaFinal = notaAprobacion + (tramoAprobacion * (puntajeRelativo / rangoPuntajeAprobacion));
+                    }
+                }
+                
+                // Redondear la nota final a un decimal
+                const notaRedondeada = Math.round(notaFinal * 10) / 10;
+                
+                // Formatear la nota a un decimal (ej: 4.0 en vez de 4)
+                const notaFormateada = notaRedondeada.toFixed(1);
+
+                // Crear y añadir la fila a la tabla
+                const fila = document.createElement('tr');
+
+                // Resaltar la primera fila que alcanza o supera el puntaje de aprobación
+                if (puntaje >= puntajeAprobacion && !approvalRowHighlighted) {
+                    fila.classList.add('bg-cyan-100/60', 'font-semibold');
+                    approvalRowHighlighted = true;
+                }
+                
+                fila.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">${puntaje.toFixed(puntajeDecimales)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${notaFormateada}</td>
+                `;
+                tablaResultados.appendChild(fila);
+            }
+        });
+
+        // Generar la escala inicial al cargar la página con los valores por defecto
+        window.onload = () => {
+            generarBtn.click();
+        };
+    </script>
+</body>
+</html>
